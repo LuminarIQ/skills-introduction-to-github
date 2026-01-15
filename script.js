@@ -90,7 +90,7 @@ const examData = {
             },
             {
                 question: 'Which law states that energy cannot be created or destroyed?',
-                options: ['Newton\'s First Law', 'Law of Conservation of Energy', 'Ohm\'s Law', 'Faraday\'s Law'],
+                options: ["Newton's First Law", 'Law of Conservation of Energy', "Ohm's Law", "Faraday's Law"],
                 correct: 1,
                 explanation: 'The Law of Conservation of Energy states that energy cannot be created or destroyed, only transformed.'
             },
@@ -107,10 +107,10 @@ const examData = {
                 explanation: 'The value of π is approximately 3.14159...'
             },
             {
-                question: 'What is Ohm\'s Law?',
+                question: "What is Ohm's Law?",
                 options: ['V = IR', 'F = ma', 'E = mc²', 'PV = nRT'],
                 correct: 0,
-                explanation: 'Ohm\'s Law states that V = IR, where V is voltage, I is current, and R is resistance.'
+                explanation: "Ohm's Law states that V = IR, where V is voltage, I is current, and R is resistance."
             },
             {
                 question: 'What is the slope of the line y = 2x + 3?',
@@ -311,10 +311,10 @@ const examData = {
                 explanation: 'The rank of a zero matrix is 0 as all its rows and columns are linearly dependent.'
             },
             {
-                question: 'What is Faraday\'s law of electromagnetic induction?',
+                question: "What is Faraday's law of electromagnetic induction?",
                 options: ['Relates to static electricity', 'Induced EMF is proportional to rate of change of magnetic flux', 'Relates to resistance', 'Relates to capacitance'],
                 correct: 1,
-                explanation: 'Faraday\'s law states that induced EMF is proportional to the rate of change of magnetic flux through a circuit.'
+                explanation: "Faraday's law states that induced EMF is proportional to the rate of change of magnetic flux through a circuit."
             },
             {
                 question: 'What is the order of reaction if rate = k[A]²[B]?',
@@ -623,7 +623,7 @@ function finishQuiz() {
     document.getElementById('pointsEarned').textContent = '+' + pointsEarned;
 
     // Update proficiency
-    const proficiencyPercent = Math.min(100, (userData.examProgress[currentExam] / 100) * 100);
+    const proficiencyPercent = Math.min(100, userData.examProgress[currentExam]);
     document.getElementById('proficiencyFill').style.width = proficiencyPercent + '%';
 
     let proficiencyLevel = 'Beginner';
@@ -639,8 +639,35 @@ function finishQuiz() {
 
 // Review answers
 function reviewAnswers() {
-    alert('Review feature coming soon! Check your answers in the console.');
+    // Show detailed review in console for now
+    console.log('=== Quiz Review ===');
+    console.log('Exam:', examData[currentExam].name);
     console.table(quizAnswers);
+    
+    // Future enhancement: Create a dedicated review modal
+    // For now, show feedback using the existing feedback modal
+    const feedbackIcon = document.getElementById('feedbackIcon');
+    const feedbackTitle = document.getElementById('feedbackTitle');
+    const feedbackText = document.getElementById('feedbackText');
+    
+    feedbackIcon.textContent = '📝';
+    feedbackTitle.textContent = 'Review Available in Console';
+    feedbackTitle.style.color = 'var(--primary-color)';
+    feedbackText.textContent = 'Open your browser console (F12) to see a detailed review of all questions and answers.';
+    
+    // Hide results and show feedback
+    quizResults.classList.add('hidden');
+    resultFeedback.classList.remove('hidden');
+    
+    // Update next question button to go back to results
+    const nextBtn = document.getElementById('nextQuestion');
+    nextBtn.textContent = 'Back to Results';
+    nextBtn.onclick = () => {
+        resultFeedback.classList.add('hidden');
+        quizResults.classList.remove('hidden');
+        nextBtn.textContent = 'Next Question';
+        nextBtn.onclick = nextQuestion;
+    };
 }
 
 // Timer functions
